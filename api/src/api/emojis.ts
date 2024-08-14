@@ -11,7 +11,7 @@ router.get<{}, EmojiResponse>('/', (req, res) => {
   })
   .catch((error: Error) => {
     if (error instanceof Error) {
-      res.status(400).send(["Database connection failed"]);
+      res.status(400).send([error.message]);
     }
 });
 });

@@ -1,11 +1,19 @@
 import express from 'express';
+import { connectToDatabase } from '../services/database.service';
 
 const router = express.Router();
 
 type EmojiResponse = string[];
 
 router.get<{}, EmojiResponse>('/', (req, res) => {
-  res.json(['😀', '😳', '🙄']);
+  connectToDatabase().then(()=>{
+    res.json(['😀', '😳', '🙄']);
+  })
+  .catch((error: Error) => {
+    if (error instanceof Error) {
+      res.status(400).send(["Database connection failed"]);
+    }
+});
 });
 
 export default router;

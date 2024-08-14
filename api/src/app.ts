@@ -12,9 +12,7 @@ require('dotenv').config();
 const app = express();
 
 
-connectToDatabase()
-  .then(() => {
-    app.use(morgan('dev'));
+  app.use(morgan('dev'));
   app.use(helmet());
   app.use(cors());
   app.use(express.json());
@@ -29,10 +27,5 @@ app.use('/api/v1', api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
-  })
-  .catch((error: Error) => {
-    console.error("Database connection failed", error);
-    process.exit();
-  })
 
 export default app;
